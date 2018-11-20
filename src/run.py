@@ -1,5 +1,7 @@
 from Graphs.Graph import *
 from Graphs.GraphDrawer import *
+from Graphs.max_flow import *
+
 
 g = Graph()
 g.nodes.append(Source())
@@ -8,12 +10,9 @@ for i in range(0, 4):
 
 g.nodes.append(Sink())
 
-for i in range(0, 10):
-    g.add_edges([
-        (0, 1), (0, 2), (1, 3), (2, 3), (2, 4), (3, 5), (4, 5)       
-    ])
+print(len(g.edges))
+g.add_edges([
+    (0, 1, 5), (0, 2, 2), (1, 3, 2), (2, 4, 4), (3, 4, 1), (3, 5, 2), (4, 5, 5)       
+])
 
-drawer = GraphDrawer()
-drawer.draw(g)
-
-drawer.exit()
+ford_fulkerson(g)

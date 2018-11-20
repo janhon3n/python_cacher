@@ -13,6 +13,11 @@ class GraphDrawer:
 
 
     def draw(self, graph):
+            
+        for item in self.win.items[:]:
+            item.undraw()
+        self.win.update()
+
         def is_solo(node):
             return isinstance(node, Sink) or isinstance(node, Source)
 
@@ -60,6 +65,4 @@ class GraphDrawer:
             text.draw(self.win)
             line.draw(self.win)
 
-    def exit(self):
         self.win.getMouse()
-        self.win.close()
