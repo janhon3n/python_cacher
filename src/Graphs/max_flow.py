@@ -48,14 +48,14 @@ def find_path(graph):
 
 def ford_fulkerson(g):
     graph = g.copy()
-    gd.draw(graph)
     r_graph = create_residual_graph(graph)
+    gd.draw(r_graph)    
     path = find_path(r_graph)
     while path is not None:
         max_flow = min(e.capacity for e in path)
         for edge in path:
             edge.original.flow += max_flow if edge.is_forward else -max_flow
         r_graph = create_residual_graph(graph)
+        gd.draw(r_graph)
         path = find_path(r_graph)
-        gd.draw(graph)
     return graph

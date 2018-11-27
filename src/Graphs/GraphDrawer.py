@@ -22,6 +22,7 @@ class GraphDrawer:
             return isinstance(node, Sink) or isinstance(node, Source)
 
         node_columns = []
+
         for node in graph.nodes:
             free_column_index = None
             for column_index, column in enumerate(node_columns):
@@ -56,12 +57,24 @@ class GraphDrawer:
                 circ.draw(self.win)
                 node.draw_position = Point(x, y)
 
+
+        def shift_y(point, shift_amount):
+            return Point(point.x, point.y + shift_amount)
+
         for edge in graph.edges:
-            line = Line(edge.node1.draw_position, edge.node2.draw_position)
-            text = Text(Point(
+            p1 = edge.node1.draw_position
+            p2 = edge.node2.draw_position
+            p1 = shift_y(p1, -5 if edge.is_forward else 5)
+            p2 = shift_y(p2, -5 if edge.is_forward else 5)
+            line = Line(p1, p2)
+
+            c = Point(
                 (edge.node1.draw_position.x + edge.node2.draw_position.x) / 2,
                 (edge.node1.draw_position.y + edge.node2.draw_position.y) / 2,
-            ), str(edge.flow) + " / " + str(edge.capacity))
+            )
+            c = shift_y(c, -10 if edge.is_forward else 10)
+                
+            text = Text(c, ("-" if not edge.is_forward else "") + str(edge.capacity))
             text.draw(self.win)
             line.draw(self.win)
 

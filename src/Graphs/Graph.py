@@ -18,6 +18,12 @@ class Edge:
         self.directed = directed
         self.flow = 0
 
+    def node_equals(self, edge):
+        return (
+            (self.node1 is edge.node1 and self.node2 is edge.node2) or
+            (self.node1 is edge.node2 and self.node2 is edge.node1)
+        )
+
 class Graph:
     def __init__(self):
         self.nodes = []
